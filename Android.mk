@@ -23,6 +23,34 @@ LOCAL_CLANG := true
 LOCAL_MODULE := libRSDriver
 LOCAL_MODULE_TARGET_ARCH_WARN := arm mips mips64 x86 x86_64 arm64
 
+# --------------- #
+# for rk_ext. Indeed, just to adapt the rk_ext in libgui.
+RK_SUPPORT := 1
+LOCAL_CFLAGS += -DRK_SUPPORT=$(RK_SUPPORT)
+ifeq ($(RK_SUPPORT),1)
+ifeq ($(strip $(BOARD_USE_DRM)),true)
+RK_STEREO := 0
+else
+RK_STEREO := 1
+endif
+LOCAL_CFLAGS += -DRK_STEREO=$(RK_STEREO)
+
+ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)),vr)
+RK_VR := 1
+else
+RK_VR := 0
+endif
+
+ifeq ($(strip $(BOARD_USE_DRM)),true)
+RK_USE_3_FB = 1
+else
+RK_USE_3_FB = 0
+endif
+
+LOCAL_CFLAGS += -DRK_VR=$(RK_VR) -DRK_USE_3_FB=$(RK_USE_3_FB)
+endif
+# --------------- #
+
 LOCAL_SRC_FILES:= \
 	driver/rsdAllocation.cpp \
 	driver/rsdBcc.cpp \
@@ -86,10 +114,40 @@ include $(BUILD_HOST_EXECUTABLE)
 # TODO: This should go into build/core/config.mk
 RSG_GENERATOR:=$(LOCAL_BUILT_MODULE)
 
+
 include $(CLEAR_VARS)
 LOCAL_CLANG := true
 LOCAL_MODULE := libRS_internal
 LOCAL_MODULE_TARGET_ARCH_WARN := arm mips mips64 x86 x86_64 arm64
+
+# --------------- #
+# for rk_ext. Indeed, just to adapt the rk_ext in libgui.
+RK_SUPPORT := 1
+LOCAL_CFLAGS += -DRK_SUPPORT=$(RK_SUPPORT)
+ifeq ($(RK_SUPPORT),1)
+ifeq ($(strip $(BOARD_USE_DRM)),true)
+RK_STEREO := 0
+else
+RK_STEREO := 1
+endif
+LOCAL_CFLAGS += -DRK_STEREO=$(RK_STEREO)
+
+ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)),vr)
+RK_VR := 1
+else
+RK_VR := 0
+endif
+
+ifeq ($(strip $(BOARD_USE_DRM)),true)
+RK_USE_3_FB = 1
+else
+RK_USE_3_FB = 0
+endif
+
+LOCAL_CFLAGS += -DRK_VR=$(RK_VR) -DRK_USE_3_FB=$(RK_USE_3_FB)
+endif
+# --------------- #
+
 
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 generated_sources:= $(local-generated-sources-dir)
@@ -193,6 +251,34 @@ include $(CLEAR_VARS)
 LOCAL_CLANG := true
 LOCAL_MODULE := libRS
 LOCAL_MODULE_TARGET_ARCH_WARN := arm mips mips64 x86 x86_64 arm64
+
+# --------------- #
+# for rk_ext. Indeed, just to adapt the rk_ext in libgui.
+RK_SUPPORT := 1
+LOCAL_CFLAGS += -DRK_SUPPORT=$(RK_SUPPORT)
+ifeq ($(RK_SUPPORT),1)
+ifeq ($(strip $(BOARD_USE_DRM)),true)
+RK_STEREO := 0
+else
+RK_STEREO := 1
+endif
+LOCAL_CFLAGS += -DRK_STEREO=$(RK_STEREO)
+
+ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)),vr)
+RK_VR := 1
+else
+RK_VR := 0
+endif
+
+ifeq ($(strip $(BOARD_USE_DRM)),true)
+RK_USE_3_FB = 1
+else
+RK_USE_3_FB = 0
+endif
+
+LOCAL_CFLAGS += -DRK_VR=$(RK_VR) -DRK_USE_3_FB=$(RK_USE_3_FB)
+endif
+# --------------- #
 
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 generated_sources:= $(local-generated-sources-dir)
